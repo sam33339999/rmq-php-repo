@@ -14,3 +14,37 @@ php main.php rmq01:producer # 產生訊息
 php main.php rmq01:consumer # 接收訊息(消化)
 ```
 
+
+## 02. RabbitMQ exchange worker queue
+> 使用 RabbitMQ 的 worker queue 來處理訊息，透過 worker queue 來平行處理訊息。
+
+這邊使用傳入字串的 `.` 數量來模擬處理時間，可以看到消化的時間是依照處理時間來決定的。如下圖所示。
+
+自己嘗試使用：
+```shell
+php main.php rmq02:producer "I am demo ..." # 產生訊息
+php main.php rmq02:producer "I am demo ... this should wait 6 sec ..." # 產生訊息
+
+php main.php rmq02:worker # 接收訊息(消化)
+```
+
+
+![image](./assets/02_01.png)
+
+這邊使用兩個 worker 進行消化，可以看到兩個 worker 是平行處理訊息的。如下圖所示。
+RabbitMQ 會自動分配給 worker 來處理訊息。
+![image](./assets/02_02.png)
+
+
+## 03. RabbitMQ publish / subscribe
+> 使用 RabbitMQ 的 publish / subscribe 來處理訊息，透過 publish / subscribe 來處理訊息。<br/>
+> 這邊使用 fanout 來處理訊息，因此多個 subscriber 會同時接收到訊息。<br/>
+> 在這邊用多開同個程式來模擬多個 subscriber。在實際業務上可以用不同的程式來處理。
+
+![image](./assets/03_exchange.png)
+
+自己嘗試使用：
+```shell
+php main.php rmq03:producer # 產生假 log
+php main.php rmq03:worker # 接收訊息(消化) 可以試著開多個 worker 來看看，會同時接收到多訊息。
+```
