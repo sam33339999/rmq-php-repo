@@ -36,7 +36,7 @@ class worker extends Command
             auto_delete: false // 自動刪除，當最後一個消費者取消訂閱時，Exchange是否自動刪除
         );
 
-        [$queueName, , ] = $channel->queue_declare();
+        [$queueName, , ] = $channel->queue_declare(); // 臨時queue，不需要名稱，RabbitMQ 會自動產生；通常斷掉連結後會會刪除 queue
         $channel->queue_bind($queueName, 'logs');
         $output->writeln('<comment> [*] 等待訊息推入. 想要離開的話請按 CTRL+C </comment>');
 
