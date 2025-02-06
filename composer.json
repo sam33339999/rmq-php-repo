@@ -9,7 +9,8 @@
         "psr-4": {
             "Rmq01\\Exchange\\": "01_exchange_string/",
             "Rmq02\\Exchange\\": "02_worker_queue/",
-            "Rmq03\\Exchange\\": "03_publish_subscribe/"
+            "Rmq03\\Exchange\\": "03_publish_subscribe/",
+            "Rmq04\\Exchange\\": "04_routing/"
         }
     }
 }

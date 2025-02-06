@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'rmq02:worker')]
-class worker extends Command
+class Worker extends Command
 {
     protected function configure(): void
     {
