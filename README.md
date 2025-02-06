@@ -3,6 +3,19 @@
 > 該 repo 使用 symfony 進行console 的整理項目，主要是為了練習 RabbitMQ 的使用。<br/>
 > 主要邏輯的話請看對應檔案 class 中的 `execute` 方法。
 
+## Requirement
+- RabbitMQ
+- PHP8.2 以上
+- composer
+
+## Installation
+
+```shell
+composer install
+
+php main.php # 查看所有指令
+```
+
 ## 01. RabbitMQ exchange string
 > 最基礎使用 RabbitMQ 的方式，透過 exchange string 來傳遞訊息。
 
