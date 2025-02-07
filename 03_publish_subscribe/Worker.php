@@ -15,7 +15,7 @@ class Worker extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('03. consumer 消化 rmq 內的資訊');
+        $this->setDescription('03. worker(consumer) 消化 rmq 內的資訊(pub/sub - fanout)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

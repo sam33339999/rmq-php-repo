@@ -14,7 +14,7 @@ class Producer extends Command
 {
     protected function configure(): void
     {
-        $this->setDescription('02. producer 產生 "任務" 推入 rmq')
+        $this->setDescription('02. producer 產生 "任務" 推入 rmq(暫無使用到 exchange)')
             ->addArgument('msg_str', InputArgument::REQUIRED, '傳入所需字串，傳遞後到消費者時，會根據裡面有幾個 . 去做 sleep 來模擬耗時任務。');
     }
 

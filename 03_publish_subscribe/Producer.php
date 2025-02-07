@@ -16,7 +16,7 @@ class Producer extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('03. producer 產生 "假log" 推入 rmq 等待消費者消化');
+        $this->setDescription('03. producer 產生 "假log" 推入 rmq 等待消費者消化(pub/sub - fanout)');
     }
 
     protected function generateFakeLog(): string

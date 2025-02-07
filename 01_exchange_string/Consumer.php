@@ -12,7 +12,7 @@ class Consumer extends Command
 {
     protected function configure(): void
     {
-        $this->setDescription('01. consumer 消化 rmq 內的資訊');
+        $this->setDescription('01. consumer 消化 rmq 內的資訊(暫無使用到 exchange)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

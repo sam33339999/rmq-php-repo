@@ -17,6 +17,10 @@ use Rmq03\Exchange\Worker as Rmq03ExchangeWorker;
 use Rmq04\Exchange\Producer as Rmq04ExchangeProducer;
 use Rmq04\Exchange\Worker as Rmq04ExchangeWorker;
 
+// 05. topics 分發
+use Rmq05\Exchange\Producer as Rmq05ExchangeProducer;
+use Rmq05\Exchange\Worker as Rmq05ExchangeWorker;
+
 use Symfony\Component\Console\Application;
 
 // main program ...
@@ -32,6 +36,9 @@ $application->add(new Rmq03ExchangeWorker());
 
 $application->add(new Rmq04ExchangeProducer());
 $application->add(new Rmq04ExchangeWorker());
+
+$application->add(new Rmq05ExchangeProducer());
+$application->add(new Rmq05ExchangeWorker());
 
 
 $application->run();

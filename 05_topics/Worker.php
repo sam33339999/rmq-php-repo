@@ -1,5 +1,5 @@
 <?php
-namespace Rmq04\Exchange;
+namespace Rmq05\Exchange;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -9,14 +9,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'rmq04:worker')]
+#[AsCommand(name: 'rmq05:worker')]
 class Worker extends Command
 {
-    const EXCHANGE_NAME = 'direct_logs';
+    const EXCHANGE_NAME = 'topic_logs';
 
     protected function configure(): void
     {
-        $this->setDescription('04. worker(consumer) 消化 rmq 內的資訊(routing - direct)')
+        $this->setDescription('05. worker(consumer) 消化 rmq 內的資訊(topics)')
             ->setHelp('這個指令會消化 RabbitMQ 內的訊息')
             ->addArgument('logLevel', InputArgument::IS_ARRAY, 'log 等級');
     }
@@ -30,10 +30,9 @@ class Worker extends Command
             password: 'guest'
         );
         $channel = $connection->channel();
-
         $channel->exchange_declare(
             exchange: self::EXCHANGE_NAME, // 交換機名稱
-            type: 'direct', // 交換機類型 allow: fanout|direct|topic|headers
+            type: 'topic', // 交換機類型 allow: fanout|direct|topic|headers
             passive: false, // 被動，檢查Exchange是否存在, 不存在則報錯
             durable: false, // 耐用，是否持久化… 重啟後是否存在
             auto_delete: false // 自動刪除，當最後一個消費者取消訂閱時，Exchange是否自動刪除
@@ -43,7 +42,6 @@ class Worker extends Command
         $listenLogLevels = implode(', ', $input->getArgument('logLevel'));
         $output->writeln("<comment> [*] 監聽 log 等級: $listenLogLevels</comment>");
         foreach ($input->getArgument('logLevel') as $logLevel) {
-            d($logLevel);
             $channel->queue_bind($queueName, self::EXCHANGE_NAME, $logLevel);
         }
         $output->writeln('<comment> [*] 等待訊息推入. 想要離開的話請按 CTRL+C </comment>');
@@ -57,9 +55,8 @@ class Worker extends Command
             exclusive: false, // 排他，當前連接使用後別的連接不能使用
             nowait: false, // 不等待
             callback: function (AMQPMessage $msg) use (&$output) {
-
                 $output->writeln('<comment> [x] routing key: ' . $msg->getRoutingKey() . '</comment>');
-                $output->writeln('<info> [x] 處理訊息: ' . $msg->body . '完成！</info>');
+                $output->writeln('<info> [x] '. $msg->getRoutingKey() . '  處理訊息: ' . $msg->body . '完成！</info>');
             },
         );
 

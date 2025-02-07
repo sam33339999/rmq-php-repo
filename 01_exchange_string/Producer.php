@@ -13,7 +13,7 @@ class Producer extends Command
 {
     protected function configure(): void
     {
-        $this->setDescription('01. producer 產生 "Hello World" 推入 rmq');
+        $this->setDescription('01. producer 產生 "Hello World" 推入 rmq(暫無使用到 exchange)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

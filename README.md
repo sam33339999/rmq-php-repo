@@ -27,7 +27,6 @@ php main.php rmq01:producer # 產生訊息
 php main.php rmq01:consumer # 接收訊息(消化)
 ```
 
-
 ## 02. RabbitMQ exchange worker queue
 > 使用 RabbitMQ 的 worker queue 來處理訊息，透過 worker queue 來平行處理訊息。
 
@@ -79,4 +78,22 @@ php main.php rmq03:worker # 接收訊息(消化) 可以試著開多個 worker �
 ```shell
 php main.php rmq04:producer # 產生假 log
 php main.php rmq04:worker debug info # 接收訊息(消化) 可以試著開多個 worker 來看看，會同時接收到多訊息。
+```
+
+## 05. RabbitMQ topics
+> 使用 RabbitMQ 的 主題(Topic) 來處理訊息，透過 pattern 來處理訊息。<br/>
+> 規則如下：
+> - `*` 代表一個單詞
+> - `#` 代表多個單詞
+>
+> 範例程式中，訊息 routing key 為 `level`.`system`.`feature`
+
+![image](./assets/05_01.png)
+
+自己嘗試使用：
+```shell
+php main.php rmq05:producer # 產生假 log
+php main.php rmq05:worker "emergency.#" # 消化 只要為 emergency 開頭的都會接收到
+php main.php rmq05:worker "emergency.*.user" # 消化 只要為 emergency 開頭且 user 結尾的都會接收到
+# ... 剩餘的自己嘗試
 ```
